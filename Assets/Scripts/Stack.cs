@@ -2,17 +2,17 @@ using System;
 using UnityEngine;
 
 [Serializable]
-public class Stack
+public class Stack<T>
 {    
-    private int[] _data;
-    private int _maxSize;
+    private T[] _data;    
     private int _top;
+    private int _size;
 
-    public Stack(int maxSize)
-    {
-        _maxSize = maxSize;
-        _data = new int[maxSize];
+    public Stack(int size = 10)
+    {        
+        _size = size;        
         _top = 0;
+        _data = new T[size];
     }
 
     public bool IsEmpty()
@@ -20,41 +20,38 @@ public class Stack
         return _top == 0;
     }
 
-    public int Size()
+    public int Count()
     {
-        return _maxSize;
+        return _top;
     }
 
-    public int Top()
+    public T Top()
     {
-        if( IsEmpty())
-        {
-            Debug.LogError("Pilha Vazia!!");
-            return -1;
-        }
+        Debug.Assert(!IsEmpty());
 
         return _data[_top - 1];
     }
 
-    public void Push(int value)
+    public void Push(T value)
     {
-        if (_top >= _maxSize)
-        {
-            Debug.LogError("Não inserido, pilha cheia!");
-            return;
-        }
+        Debug.Assert(_top < _size);
 
         _data[_top++] = value;
     }
 
-    public int Pop()
+    public T Pop()
     {
-        if (IsEmpty())
-        {
-            Debug.LogError("Pilha Vazia!!");
-            return -1;
-        }
+        Debug.Assert(!IsEmpty());
 
-        return _data[--_top];
+        T result = _data[--_top];
+        _data[--_top] = default;
+
+        return result;
+    }
+
+    public void Clear()
+    {
+        _top = 0;
+        Array.Clear(_data, 0, _size);
     }
 }
