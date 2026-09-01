@@ -1,48 +1,67 @@
+using System.Numerics;
 using UnityEngine;
 
-public class Queue
+public class Queue<T>
 {
-    private int[] _data;
-    private int _maxSize;
-    private int _count;
+    private T[] _data;
     private int _rear;
     private int _front;
+    private int _size;
+    private int _resizeFactor;
 
-    public Queue(int maxSize)
+    public Queue(int size, int factor = -1)
     {
-        _data = new int[maxSize];
-        _maxSize = maxSize;
-        _count = 0;
+        _data = new T[size];
+        _size = size;
         _rear = 0;
-        _front = 0;        
+        _front = 0;
+        _resizeFactor = factor;
     }
 
     public bool IsEmpty() => _front == _rear;
+    public bool IsFull() => _rear == _size;
 
-    public bool IsFull() => _count == _maxSize;
+    public int Count() => _rear - _front;
 
-    public int Count() => _count;
-
-    public void Enqueue(int value)
+    private void ReSize()
     {
-        if (IsFull())
+        int reSizeLenght = _resizeFactor == -1 ? (int)_size / 2 : _resizeFactor;
+
+        _size += reSizeLenght;
+
+        T[] newArray = new T[_size];
+        for(int i = _front; i < _data.Length; i++)
         {
-            Debug.LogError("Queue is full");
-            return;
+            newArray[i - _front] = _data[i];
         }
-        _data[_rear++] = value;        
-        ++_count;
+
+        _rear -= _front;
+        _front = 0;
+        _data = newArray;
     }
 
-    public int Dequeue()
-    {
-        if (IsEmpty())
+
+
+    public void Enqueue(T value)
+    {        
+        if(IsFull())
         {
-            Debug.LogError("Queue is empty");
-            return -1;
+            ReSize();
         }
-        
-        --_count;
-        return _data[_front];
+        _data[_rear++] = value;
+    }
+
+    public T Dequeue()
+    {
+        Debug.Assert(_front != _rear);
+
+        int index = _front++;
+
+        if(_front == _rear)
+        {
+            _rear = _front = 0;
+        }
+
+        return _data[index];
     }
 }
