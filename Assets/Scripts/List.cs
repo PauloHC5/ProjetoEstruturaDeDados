@@ -1,3 +1,4 @@
+using NUnit.Framework;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
@@ -84,5 +85,81 @@ public class List<ListType>
         }
 
         return false;
+    }
+
+    public ListType RemoveAt(int index)
+    {
+        Debug.Assert(index < count);
+        Debug.Assert(count > 0);
+
+        if (index == 0)
+        {
+            Node<ListType> nodeResult = first;
+            first = nodeResult.next;
+            ListType result = nodeResult.value;
+            nodeResult.next = null;
+            --count;
+            return result;
+        }
+        else
+        {
+            Node<ListType> prior = FindByIndex(index - 1);
+            Node<ListType> nodeToRemove = prior.next;
+            prior.next = nodeToRemove.next;
+            ListType result = nodeToRemove.value;
+            if(nodeToRemove == last)
+            {
+                last = prior;
+            }
+            nodeToRemove.next = null;
+            return result;
+
+        }        
+    }
+
+    public ListType this[int index]
+    {
+        get
+        {
+            return FindByIndex(index).value;            
+        }
+        set
+        {
+            FindByIndex(index).value = value;
+        }
+    }
+
+    public static List<ListType> operator +(List<ListType> a, List<ListType> b)
+    {
+        List<ListType> result = new List<ListType>();
+        Node<ListType> node = a.first;
+        while(node != null)
+        {
+            result.Insert(node.value);
+            node = node.next;
+        }
+
+        node = b.first;
+        while (node != null)
+        {
+            result.Insert(node.value);
+            node = node.next;
+        }
+
+        return result;
+    }
+
+    private Node<ListType> FindByIndex(int index)
+    {
+        Debug.Assert(index < count);
+        Debug.Assert(count > 0);
+
+        Node<ListType> result = first;
+        for (int i = 0; i < index; ++i)
+        {
+            result = result.next;
+        }
+
+        return result;
     }
 }
