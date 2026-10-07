@@ -10,8 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4d774b09344e5964ab67b386a27f3170, type: 3}
-  m_Name: DataItem
+  m_Name: DataItem 8
   m_EditorClassIdentifier: Assembly-CSharp::DataItem
-  itemName: Test
-  price: 137
-  description: Lorem Ipsum
+  itemName: "Machado da Desgra\xE7a"
+  price: 120
+  description: "Um machado amaldi\xE7oado pelos espiritos vingativos da pris\xE3o
+    do leste."
