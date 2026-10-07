@@ -950,7 +950,7 @@ MonoBehaviour:
       - m_Target: {fileID: 718423960}
         m_TargetAssemblyTypeName: UIController, Assembly-CSharp
         m_MethodName: SetStateAsc
-        m_Mode: 6
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -1175,7 +1175,7 @@ MonoBehaviour:
       - m_Target: {fileID: 718423960}
         m_TargetAssemblyTypeName: UIController, Assembly-CSharp
         m_MethodName: SetStateName
-        m_Mode: 6
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -1355,10 +1355,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::UIController
   uiItemPrefab: {fileID: 4642090883207083117, guid: 352e8eeae65bd074fbc67c9e19d90248, type: 3}
   content: {fileID: 346276669}
-  toggles:
-  - {fileID: 644446062}
-  - {fileID: 581358388}
-  - {fileID: 1412308039}
 --- !u!1 &718534805
 GameObject:
   m_ObjectHideFlags: 0
@@ -1743,8 +1739,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 718423960}
         m_TargetAssemblyTypeName: UIController, Assembly-CSharp
-        m_MethodName: SetStateDesc
-        m_Mode: 6
+        m_MethodName: SetStateName
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
