@@ -40,10 +40,7 @@ public class UIController : MonoBehaviour
 
     private void ResetUI()
     {
-        for(int i = content.childCount - 1; i >= 0; i--)
-        {
-            Destroy(content.GetChild(i).gameObject);
-        }
+        DestroyUI();
 
         BubbleSort();
 
@@ -51,6 +48,67 @@ public class UIController : MonoBehaviour
         {
             CreateUIItem(inventory[i]);
         }
+    }
+
+    private void DestroyUI()
+    {
+        for (int i = content.childCount - 1; i >= 0; i--)
+        {
+            Destroy(content.GetChild(i).gameObject);
+        }
+    }
+
+    public void Search(string values)
+    {
+        SensitiveSearch(values);
+    }
+
+    private void SensitiveSearch(string value)
+    {
+        DestroyUI();
+        if(string.IsNullOrEmpty(value))
+        {
+            for (int i = 0; i < inventory.Length; i++)
+            {
+                CreateUIItem(inventory[i]);
+            }
+            return;
+        }
+
+        List<DataItem> values = SequentialSearchByName(value);
+
+        for (int i = 0; i < values.Count; i++)
+        {
+            CreateUIItem(values[i]);
+        }
+    }
+
+    private List<DataItem> SequentialSearchByName(string value)
+    {
+        List<DataItem> result = new List<DataItem>();
+
+        string upperTarget = value.ToUpper();
+        for (int i = 0; i < inventory.Length; i++)
+        {
+            var upperSource = inventory[i].itemName.ToUpper();
+
+            if(upperTarget[0].CompareTo(upperSource[0]) > 0)
+            {
+                continue;
+            }
+
+            if (upperTarget[0].CompareTo(upperSource[0]) < 0)
+            {
+                break;
+            }
+
+            if (upperSource.Length >= upperTarget.Length && (upperSource.Substring(0, upperTarget.Length) == upperTarget))
+            {
+                result.Insert(inventory[i]);
+            }
+        }
+
+        return result;
     }
 
     private void BubbleSort()
